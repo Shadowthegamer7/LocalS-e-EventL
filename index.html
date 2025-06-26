@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carrinho de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .produto {
+            margin-bottom: 10px;
+        }
+
+        #carrinho {
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Loja Virtual</h1>
+
+    <div class="produto">
+        <span>🍎 Maçã - R$ 2.00</span>
+        <button onclick="adicionarAoCarrinho('Maçã', 2.00)">Adicionar</button>
+    </div>
+    <div class="produto">
+        <span>🍌 Banana - R$ 1.50</span>
+        <button onclick="adicionarAoCarrinho('Banana', 1.50)">Adicionar</button>
+    </div>
+    <div class="produto">
+        <span>🍞 Pão - R$ 3.00</span>
+        <button onclick="adicionarAoCarrinho('Pão', 3.00)">Adicionar</button>
+    </div>
+
+    <h2>Carrinho</h2>
+    <div id="carrinho"></div>
+
+    <script>
+        // Inicializa carrinho a partir do localStorage
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+        function salvarCarrinho() {
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        }
+
+        function adicionarAoCarrinho(nome, preco) {
+            carrinho.push({ nome, preco });
+            salvarCarrinho();
+            mostrarCarrinho();
+        }
+
+        function removerItem(index) {
+            carrinho.splice(index, 1);
+            salvarCarrinho();
+            mostrarCarrinho();
+        }
+
+        function mostrarCarrinho() {
+            const carrinhoDiv = document.getElementById('carrinho');
+            if (carrinho.length === 0) {
+                carrinhoDiv.innerHTML = '<p>Carrinho vazio.</p>';
+                return;
+            }
+
+            let html = '<ul>';
+            let total = 0;
+            carrinho.forEach((item, index) => {
+                total += item.preco;
+                html += `<li>${item.nome} - R$ ${item.preco.toFixed(2)} 
+                  <button onclick="removerItem(${index})">Remover</button></li>`;
+            });
+            html += '</ul>';
+            html += `<p><strong>Total: R$ ${total.toFixed(2)}</strong></p>`;
+            carrinhoDiv.innerHTML = html;
+        }
+
+        // Exibe carrinho ao carregar a página
+        mostrarCarrinho();
+    </script>
+</body>
+
+</html>
