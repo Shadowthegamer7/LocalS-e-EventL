@@ -96,10 +96,12 @@
     <div class="contador-container">
         <h1>Contador de Cliques</h1>
         <div class="contador" id="contador">0</div>
-        <button id="btnClique">Clique aqui</button>
+        <button id="btnClique">Clique aqui :3</button>
         <button id="btnResetar" style="background:#e53935; color:#fff; margin-top:10px;">Resetar</button>
         <button id="btnModo" class="modo-btn">Modo Escuro</button>
+        <button id="btnMenos"> Diminuir >:]</button>
     </div>
+    
     <script>
         // Recupera o valor salvo ou inicia em 0
         let totalCliques = parseInt(localStorage.getItem('totalCliques')) || 0;
@@ -118,6 +120,14 @@
             contador.textContent = totalCliques;
             localStorage.setItem('totalCliques', totalCliques);
         });
+
+        //Botão de Diminuir cliques
+        document.getElementById('btnMenos').addEventListener('click', funcdimin);
+        function funcdimin (){
+            totalCliques--;
+            contador.textContent = totalCliques;
+            localStorage.setItem('totalCliques', totalCliques);
+        }; 
 
         // Modo escuro/claro
         const btnModo = document.getElementById('btnModo');
